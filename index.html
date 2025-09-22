@@ -1,0 +1,194 @@
+<!-- БАННЕРЫ E-SCOOTERS (всё в rem) -->
+<section class="banners">
+  <!-- Баннер 1: Город -->
+  <article class="banner banner--urban" role="region" aria-labelledby="banner-urban-title">
+    <div class="banner__wrapper">      
+    </div>
+  </article>
+
+  <!-- Баннер 2: Внедорожье -->
+  <article class="banner banner--offroad" role="region" aria-labelledby="banner-offroad-title">
+    <div class="banner__wrapper">      
+    </div>
+  </article>
+
+  <!-- Баннер 3: Акция -->
+  <article class="banner banner--promo" role="region" aria-labelledby="banner-promo-title">
+    <div class="banner__wrapper">      
+    </div>
+  </article>
+</section>
+
+<style>
+:root{
+  /* Базовые переменные бренда */
+  --brand-bg: oklch(0.98 0 0);
+  --brand-text: oklch(0.22 0.02 270);
+  --brand-accent: oklch(0.72 0.16 145);
+  --brand-accent-2: oklch(0.72 0.16 210);
+  --brand-contrast: oklch(0.98 0 0);
+
+  /* Размеры */
+  --container-w: 75rem;      /* ~1200px */
+  --banner-h: 40rem;         /* ~640px десктоп */
+  --banner-h-m: 28rem;       /* ~448px мобайл */
+  --radius-2xl: 1.5rem;
+  --space: 1.2rem;
+  --space-lg: 2rem;
+  --shadow: 0 0.4rem 1.4rem rgba(0,0,0,.12), 0 0.2rem 0.6rem rgba(0,0,0,.06);
+}
+
+/* Контейнер секции */
+.banners{
+  display: grid;
+  gap: 1.5rem;
+  padding: 1.5rem 1rem;
+  background: var(--brand-bg);
+}
+
+/* Базовый баннер */
+.banner{
+  position: relative;
+  border-radius: var(--radius-2xl);
+  overflow: clip;
+  box-shadow: var(--shadow);
+  background:
+    radial-gradient(120% 80% at 85% 10%, rgba(255,255,255,.18) 0%, rgba(255,255,255,0) 60%),
+    linear-gradient(135deg, rgba(0,0,0,.25), rgba(0,0,0,.1));
+  isolation: isolate;
+  min-height: var(--banner-h);
+  color: var(--brand-contrast);
+}
+
+/* Внутренняя сетка */
+.banner__wrapper{
+  height: 100%;
+  max-width: var(--container-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  align-items: center;
+  padding: 2.5rem clamp(1rem, 3vw, 2rem);
+}
+
+/* Левая колонка: контент */
+.banner__content{
+  display: grid;
+  gap: 1rem;
+  z-index: 2;
+}
+
+.banner__title{
+  font-size: clamp(1.8rem, 2.6rem + 0.5vw, 3.2rem);
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--brand-contrast);
+}
+
+.banner__subtitle{
+  font-size: 1.125rem;
+  line-height: 1.6;
+  opacity: .92;
+}
+
+.banner__btn{
+  align-self: start;
+  display: inline-block;
+  padding: 0.9rem 1.4rem;
+  border-radius: 999rem;
+  background: var(--brand-accent);
+  color: var(--brand-contrast);
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+  box-shadow: 0 0.2rem 0.8rem rgba(0,0,0,.15);
+}
+.banner__btn:hover{
+  transform: translateY(-0.1rem);
+  box-shadow: 0 0.4rem 1.2rem rgba(0,0,0,.2);
+}
+
+/* Правая колонка: продукт */
+.banner__product{
+  position: relative;
+  display: grid;
+  place-items: end;
+  z-index: 2;
+}
+.banner__product img{
+  width: min(38rem, 100%);
+  height: auto;
+  filter: drop-shadow(0 0.6rem 1.6rem rgba(0,0,0,.35));
+  transform: translateY(0);
+  transition: transform .35s ease;
+}
+.banner:hover .banner__product img{
+  transform: translateY(-0.25rem);
+}
+
+/* Декоративные слои (подложки с фото/градиентами) */
+.banner::before,
+.banner::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.banner::before{
+  /* Фотофон: замените var(--bg) на нужный url(...) в модификаторах */
+  background: var(--bg, linear-gradient(120deg, #0c1220, #0f1a32));
+  background-size: cover;
+  background-position: center;
+  filter: saturate(1.05) contrast(1.05) brightness(0.95);
+}
+.banner::after{
+  /* Градиентная вуаль для читаемости текста */
+  background:
+    radial-gradient(70% 70% at 20% 50%, rgba(0,0,0,.45) 0%, rgba(0,0,0,.1) 60%, rgba(0,0,0,0) 100%),
+    linear-gradient(90deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.05) 45%, rgba(0,0,0,0) 70%);
+  mix-blend-mode: multiply;
+}
+
+/* Модификаторы: подставьте фоны */
+.banner--urban{  --bg: url("/img/banners/urban-city.webp"); aspect-ratio: 16/9; max-width: 100%; height: auto;}
+.banner--offroad{ --bg: url("/img/banners/offroad-trail.webp"); aspect-ratio: 16/9; max-width: 100%; height: auto;}
+.banner--promo{  --bg: url("/img/banners/promo-sale.webp"); aspect-ratio: 16/9; max-width: 100%; height: auto;}
+.banner--promo .banner__btn{ background: var(--brand-accent-2); }
+
+/* Адаптив */
+@media (max-width: 64rem){         /* ~1024px */
+  :root{ --banner-h: 36rem; }
+  .banner__wrapper{ grid-template-columns: 1.15fr 0.85fr; }
+}
+@media (max-width: 48rem){         /* ~768px */
+  :root{ --banner-h: var(--banner-h-m); }
+  .banner{
+    min-height: var(--banner-h-m);
+    border-radius: 1rem;
+  }
+  .banner__wrapper{
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    padding: 1.4rem 1rem 1.2rem;
+  }
+  .banner__product{
+    place-items: center;
+  }
+  .banner__product img{
+    width: min(28rem, 90%);
+  }
+  .banner::after{
+    background:
+      radial-gradient(70% 70% at 50% 20%, rgba(0,0,0,.50) 0%, rgba(0,0,0,.15) 50%, rgba(0,0,0,0) 100%),
+      linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,0) 50%);
+  }
+}
+
+/* Предпочтение «меньше анимации» */
+@media (prefers-reduced-motion: reduce){
+  .banner__btn,
+  .banner__product img{ transition: none; }
+}
+</style>
